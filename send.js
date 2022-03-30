@@ -49,7 +49,7 @@ if(!fromAddress)
 const toAddress = args['to'];
 if(!toAddress)
   throw new Error('To Address not specified!');
-const privateKey = args['private_key'];
+const privateKey = args['key'];
 if(!privateKey)
   throw new Error('Private Key not specified!');
 const data = args['data'];
