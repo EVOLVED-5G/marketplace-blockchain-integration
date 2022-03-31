@@ -2,7 +2,7 @@
 
 ## Intro
 
-This project makes use of the [Web3 Javascript Library](https://github.com/ChainSafe/web3.js), and a given project on [Infura](https://infura.io/).
+This project makes use of the [Web3 Javascript Library](https://github.com/ChainSafe/web3.js), and a given project on [Infura](https://infura.io/), which is a third-party service that allows interaction with the Ethereum network via the web3 library.
 
 ## Project setup
 
