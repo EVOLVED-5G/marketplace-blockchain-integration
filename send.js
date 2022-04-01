@@ -1,4 +1,7 @@
 const Web3 = require("web3");
+const transactionValueETH = '0.000000001';
+const feeInGWei = '5';
+const priority = 'slow';
 
 async function main() {
     // Configuring the connection to an Ethereum node
@@ -16,16 +19,16 @@ async function main() {
     const tx = {
         from: "0x" + fromAddress,
         to: "0x" + toAddress,
-        value: web3.utils.toWei("0.000000001"),
-        schedule: "slow"
+        value: web3.utils.toWei(transactionValueETH),
+        schedule: priority
     };
 
     if (data)
         tx.data = "0x" + Buffer.from(data, 'utf8').toString('hex');
     // Assigning the right amount of gas
     tx.gas = await web3.eth.estimateGas(tx);
-    tx.maxFeePerGas = web3.utils.toWei('2.5', 'gwei');
-    tx.maxPriorityFeePerGas = web3.utils.toWei('2.5', 'gwei');
+    tx.maxFeePerGas = web3.utils.toWei(feeInGWei, 'gwei');
+    tx.maxPriorityFeePerGas = web3.utils.toWei(feeInGWei, 'gwei');
 
     // console.log("base fee: " + baseFee + "\n");
     // console.log("gas price: " + gasPrice + "\n");
