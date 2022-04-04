@@ -1,7 +1,12 @@
-const Web3 = require("web3");
-const transactionValueETH = '0.000000001';
-const feeInGWei = '5';
+import Web3 from "web3";
+import dotenv from "dotenv";
+import minimist from "minimist";
+
+const transactionValueETH = '0.0000000001';
+const tipInGWei = '1';
 const priority = 'slow';
+
+dotenv.config();
 
 async function main() {
     // Configuring the connection to an Ethereum node
@@ -26,15 +31,12 @@ async function main() {
     if (data)
         tx.data = "0x" + Buffer.from(data, 'utf8').toString('hex');
     // Assigning the right amount of gas
+    const baseFeePerGas = (await (web3.eth.getBlock("pending"))).baseFeePerGas;
+    const tipForMiner = web3.utils.toWei(tipInGWei, 'gwei');
+    const max = Number(tipForMiner) + baseFeePerGas;
     tx.gas = await web3.eth.estimateGas(tx);
-    tx.maxFeePerGas = web3.utils.toWei(feeInGWei, 'gwei');
-    tx.maxPriorityFeePerGas = web3.utils.toWei(feeInGWei, 'gwei');
-
-    // console.log("base fee: " + baseFee + "\n");
-    // console.log("gas price: " + gasPrice + "\n");
-    // console.log("gas: " + tx.gas + "\n");
-    // console.log("max fee per gas: " + tx.maxFeePerGas + "\n");
-    // console.log("max priority gas price: " + tx.maxPriorityFeePerGas + "\n");
+    tx.maxFeePerGas = max;
+    tx.maxPriorityFeePerGas = tipForMiner;
 
     // Sending the transaction to the network
     const receipt = await web3.eth
@@ -52,8 +54,8 @@ async function main() {
         });
 }
 
-require("dotenv").config();
-const args = require('minimist')(process.argv.slice(2));
+
+const args = minimist(process.argv.slice(2));
 const network = args['network'].trim();
 if (!network)
     throw new Error('Network not specified!');
@@ -70,5 +72,4 @@ const privateKey = args['key'].trim();
 if (!privateKey)
     throw new Error('Private Key not specified!');
 const data = args['data'].trim();
-
 main();
