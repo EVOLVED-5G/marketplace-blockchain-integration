@@ -30,7 +30,7 @@ node send.js --network=rinkeby --project=123 --from=456 --to=789 --key=asdf1234 
 
 ### Arguments explanation
 
-`network`
+`network` - **required**
 
 Defines the Ethereum network. Can be one of `mainnet`, `rinkeby`, `ropsten`, `kovan`, `goerli`
 
