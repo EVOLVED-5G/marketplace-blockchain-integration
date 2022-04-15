@@ -4,6 +4,10 @@
 
 This project makes use of the [Web3 Javascript Library](https://github.com/ChainSafe/web3.js), and a given project on [Infura](https://infura.io/), which is a third-party service that allows interaction with the Ethereum network via the web3 library.
 
+## Prerequisites
+
+`NodeJS version 14` (or newer) is required.
+
 ## Project setup
 
 This is a fairly simple nodejs project. In order to build it, just `cd` into the project directory and run:
@@ -26,7 +30,7 @@ node send.js --network=rinkeby --project=123 --from=456 --to=789 --key=asdf1234 
 
 ### Arguments explanation
 
-`network`
+`network` - **required**
 
 Defines the Ethereum network. Can be one of `mainnet`, `rinkeby`, `ropsten`, `kovan`, `goerli`
 
