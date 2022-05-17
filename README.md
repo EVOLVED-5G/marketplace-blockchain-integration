@@ -57,3 +57,21 @@ Defines the Ethereum sender address private key. This is needed for the `web3` l
 `data` - **optional**
 
 Optional parameter. Defines any arbitrary data that will be added as additional payload to the transaction. Can be a note from the sender, a greeting, or anything else.
+
+## Docker Deployment
+
+The app can be instantly deployed via Docker. Just run
+
+```bash
+docker-compose up --build
+```
+
+And the docker container will be built and run. The app will then be available via
+[localhost:8000](http://localhost:8000)
+
+**Notice:** The `docker-compose.yml` file assumes that an external docker network (`docker_evolved5g_net`) has already been set up.
+So, you either need to have the Evolved5g-Pilot project initialized, or just create an external network:
+
+```bash
+docker network create docker_evolved5g_net
+```
