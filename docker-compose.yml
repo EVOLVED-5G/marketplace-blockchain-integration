@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  backend:
+  app:
     container_name: evolved5g_blockchain_sender
     build:
       context: .
