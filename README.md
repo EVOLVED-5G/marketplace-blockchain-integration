@@ -20,13 +20,7 @@ Then, you are ready to use the `send.js` script.
 
 ## Usage
 
-This script is designed to be called from the command line.
-Example:
-
-```bash
-
-node send.js --network=rinkeby --project=123 --from=456 --to=789 --key=asdf1234 --data="Test data"
-```
+This script is designed to be called as a web API, via express (listening port: `8000`).
 
 ### Arguments explanation
 
