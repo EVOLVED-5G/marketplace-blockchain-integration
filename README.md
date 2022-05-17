@@ -16,7 +16,7 @@ This is a fairly simple nodejs project. In order to build it, just `cd` into the
 npm install
 ```
 
-Then, you are ready to use the `send.js` script.
+Then, run `npm run start` in order to initiate the server.
 
 ## Usage
 
