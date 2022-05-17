@@ -18,10 +18,10 @@ app.use((req, res, next) => {
 
 app.post('/create', async (req, res) => {
     const network = req.body.network;
-    const projectId = req.body.projectId;
-    const fromAddress = req.body.fromAddress;
-    const toAddress = req.body.toAddress;
-    const privateKey = req.body.privateKey;
+    const projectId = req.body.project;
+    const fromAddress = req.body.from;
+    const toAddress = req.body.to;
+    const privateKey = req.body.key;
     const data = req.body.data;
     if(!network || network === '')
         return res.status(400).json({message: "Network is required"});

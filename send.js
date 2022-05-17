@@ -38,16 +38,20 @@ export async function createTransaction(network, projectId, fromAddress, toAddre
     tx.maxPriorityFeePerGas = tipForMiner;
 
     // Sending the transaction to the network
-    return web3.eth
-        .sendTransaction(tx)
-        .once("transactionHash", (txhash) => {
-            let link = "https://";
-            if (network !== "mainnet")
-                link += network + ".";
-            link += "etherscan.io/tx/" + txhash;
-            return {
-                tx: tx,
-                link: link
-            };
+    return new Promise(function (resolve, reject) {
+        web3.eth
+            .sendTransaction(tx)
+            .once("transactionHash", (txhash) => {
+                let link = "https://";
+                if (network !== "mainnet")
+                    link += network + ".";
+                link += "etherscan.io/tx/" + txhash;
+                resolve({
+                    tx: tx,
+                    link: link
+                });
+            }).catch(err => {
+            reject(err);
         });
+    });
 }
