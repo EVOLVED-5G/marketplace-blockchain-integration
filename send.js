@@ -2,7 +2,7 @@ import Web3 from "web3";
 import dotenv from "dotenv";
 
 const transactionValueETH = '0.0000000001';
-const tipInGWei = '1';
+const tipInGWei = '1.5';
 const priority = 'slow';
 
 dotenv.config();
