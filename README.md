@@ -16,17 +16,11 @@ This is a fairly simple nodejs project. In order to build it, just `cd` into the
 npm install
 ```
 
-Then, you are ready to use the `send.js` script.
+Then, run `npm run start` in order to initiate the server.
 
 ## Usage
 
-This script is designed to be called from the command line.
-Example:
-
-```bash
-
-node send.js --network=rinkeby --project=123 --from=456 --to=789 --key=asdf1234 --data="Test data"
-```
+This script is designed to be called as a web API, via express (listening port: `8000`).
 
 ### Arguments explanation
 
@@ -63,3 +57,21 @@ Defines the Ethereum sender address private key. This is needed for the `web3` l
 `data` - **optional**
 
 Optional parameter. Defines any arbitrary data that will be added as additional payload to the transaction. Can be a note from the sender, a greeting, or anything else.
+
+## Docker Deployment
+
+The app can be instantly deployed via Docker. Just run
+
+```bash
+docker-compose up --build
+```
+
+And the docker container will be built and run. The app will then be available via
+[localhost:8000](http://localhost:8000)
+
+**Notice:** The `docker-compose.yml` file assumes that an external docker network (`docker_evolved5g_net`) has already been set up.
+So, you either need to have the Evolved5g-Pilot project initialized, or just create an external network:
+
+```bash
+docker network create docker_evolved5g_net
+```
