@@ -2,7 +2,7 @@ import Web3 from "web3";
 import dotenv from "dotenv";
 
 const transactionValueETH = '0.0000000001';
-const tipInGWei = '1.5';
+const tipInGWei = '1';
 const priority = 'slow';
 
 dotenv.config();
@@ -14,9 +14,6 @@ export async function createTransaction(network, projectId, fromAddress, toAddre
             `https://${network}.infura.io/v3/${projectId}`
         )
     );
-    // A nonce is basically the number of transactions that have been performed from a particular account address.
-    const accountNonce =
-        '0x' + (await web3.eth.getTransactionCount("0x" + fromAddress) + 1).toString(16)
     // Creating a signing account from a private key
     const signer = web3.eth.accounts.privateKeyToAccount(
         privateKey
@@ -24,7 +21,6 @@ export async function createTransaction(network, projectId, fromAddress, toAddre
     web3.eth.accounts.wallet.add(signer);
     // Creating the transaction object
     const tx = {
-        nonce: accountNonce,
         from: "0x" + fromAddress,
         to: "0x" + toAddress,
         value: web3.utils.toWei(transactionValueETH),
