@@ -48,24 +48,38 @@ app.post('/create', async (req, res) => {
         return res.status(400).json({message: "Private key is required"});
 
     try {
-        logger.log({
-            level: 'info',
-            message: 'New transaction request. data: ' + data
-        });
-        const result = await createTransaction(network, projectId, fromAddress, toAddress, privateKey, data);
-        res.status(200).json(result);
-        logger.log({
-            level: 'info',
-            message: 'Transaction completed successfully. data: ' + data
-        });
+        return await performCall(network, projectId, fromAddress, toAddress, privateKey, data, false, res);
     } catch (e) {
-        logger.log({
-            level: 'error',
-            message: 'Transaction error. data: ' + data + ' Message: ' + e.toString()
-        });
-        return res.status(500).json({message: e.toString()});
+        console.log("caught first error: " + e);
+        try {
+            console.log("trying again...");
+            return await performCall(network, projectId, fromAddress, toAddress, privateKey, data, true, res);
+        } catch (err) {
+            console.log("caught second error: " + err);
+            logger.log({
+                level: 'error',
+                message: 'Transaction error. data: ' + data + ' Message: ' + err.toString()
+            });
+            return res.status(500).json({message: err.toString()});
+        }
     }
 
 });
+
+
+async function performCall(network, projectId, fromAddress, toAddress, privateKey, data, shouldAddToGas, res) {
+
+    logger.log({
+        level: 'info',
+        message: 'New transaction request. data: ' + data
+    });
+    const result = await createTransaction(network, projectId, fromAddress, toAddress, privateKey, data, shouldAddToGas);
+    res.status(200).json(result);
+    logger.log({
+        level: 'info',
+        message: 'Transaction completed successfully. data: ' + data
+    });
+
+}
 
 app.listen(8000);

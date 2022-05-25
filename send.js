@@ -2,12 +2,12 @@ import Web3 from "web3";
 import dotenv from "dotenv";
 
 const transactionValueETH = '0.0000000001';
-const tipInGWei = '1';
+let tipInGWeiOriginal = '1';
 const priority = 'slow';
 
 dotenv.config();
 
-export async function createTransaction(network, projectId, fromAddress, toAddress, privateKey, data) {
+export async function createTransaction(network, projectId, fromAddress, toAddress, privateKey, data, shouldAddToGas) {
     // Configuring the connection to an Ethereum node
     const web3 = new Web3(
         new Web3.providers.HttpProvider(
@@ -31,8 +31,13 @@ export async function createTransaction(network, projectId, fromAddress, toAddre
         tx.data = "0x" + Buffer.from(data, 'utf8').toString('hex');
     // Assigning the right amount of gas
     const baseFeePerGas = (await (web3.eth.getBlock("pending"))).baseFeePerGas;
+    let tipInGWei = tipInGWeiOriginal;
+    if(shouldAddToGas)
+        tipInGWei = (Number(tipInGWei) + 1).toString()
+    console.log(tipInGWei);
     const tipForMiner = web3.utils.toWei(tipInGWei, 'gwei');
-    const max = Number(tipForMiner) + baseFeePerGas;
+    let max = Number(tipForMiner) + baseFeePerGas;
+    console.log("max: " + max);
     tx.gas = await web3.eth.estimateGas(tx);
     tx.maxFeePerGas = max;
     tx.maxPriorityFeePerGas = tipForMiner;
