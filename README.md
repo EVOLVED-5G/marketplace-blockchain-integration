@@ -10,6 +10,14 @@ This project makes use of the [Web3 Javascript Library](https://github.com/Chain
 
 ## Project setup
 
+### Setting the `.env` file
+
+First, make a copy of the `.env.example` file, and rename it to `.env`:
+
+```bash
+cp .env.example .env
+```
+
 This is a fairly simple nodejs project. In order to build it, just `cd` into the project directory and run:
 
 ```bash
